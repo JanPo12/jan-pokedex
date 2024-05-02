@@ -60,12 +60,12 @@ function Pagina(props) {
           <p>{desc?.flavor_text_entries[26].flavor_text}</p>
         </div>
         <div className='stats' style={{borderColor: tipoColorDict[pokemon?.types[0].type.name]}}>
-          <p>Vida: {pokemon?.stats[0].base_stat}</p>
-          <p>Ataque: {pokemon?.stats[1].base_stat}</p>
-          <p>Defensa: {pokemon?.stats[2].base_stat}</p>
-          <p>Ataque-Especial: {pokemon?.stats[3].base_stat}</p>
-          <p>Defensa-Especial: {pokemon?.stats[4].base_stat}</p>
-          <p>Velocidad: {pokemon?.stats[5].base_stat}</p>
+          <p className='p_s'>Vida: <div className='div_s' style={{width:pokemon?.stats[0].base_stat * 1.5}}>{pokemon?.stats[0].base_stat}</div></p>
+          <p className='p_s'>Ataque: <div className='div_s' style={{width:pokemon?.stats[1].base_stat * 1.5}}>{pokemon?.stats[1].base_stat}</div></p>
+          <p className='p_s'>Defensa: <div className='div_s' style={{width:pokemon?.stats[2].base_stat * 1.5}}>{pokemon?.stats[2].base_stat}</div></p>
+          <p className='p_s'>Ataque-Especial: <div className='div_s' style={{width:pokemon?.stats[3].base_stat * 1.5}}>{pokemon?.stats[3].base_stat}</div></p>
+          <p className='p_s'>Defensa-Especial: <div className='div_s' style={{width:pokemon?.stats[4].base_stat * 1.5}}>{pokemon?.stats[4].base_stat}</div></p>
+          <p className='p_s'>Velocidad: <div className='div_s' style={{width:pokemon?.stats[5].base_stat * 1.5}}>{pokemon?.stats[5].base_stat}</div></p>
         </div>
       </div>
     </div>
