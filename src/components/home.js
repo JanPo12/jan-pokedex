@@ -6,17 +6,23 @@ import { useNavigate } from 'react-router-dom';
 function Home(props) {
 
   const [pokemon, setPokemon] = useState(null)
+  const [cargant, setCargant] = useState(null)
 
   const Navigate = useNavigate()
 
+  const [buscar, setBuscar] = useState("")
+
   useEffect(() => {
     const getPokemon = async () => {
+        setCargant(true)
         const { result } = await getElements('https://pokeapi.co/api/v2/pokemon?limit=1302&offset=0');
         const pokemons = await Promise.all(result.results.map(async (poke) => {
             const { result: pokemonData } = await getElements(poke.url);
             return pokemonData;
         }));
+        setCargant(false)
         setPokemon(pokemons);
+
     };
 
     getPokemon();
@@ -28,7 +34,12 @@ function Home(props) {
         console.log(sortedPokemon);
         setPokemon(sortedPokemon);
     }
+    
   }, []);
+
+  useEffect(() => {
+    setBuscar(props.mostrar_busqueda)
+  }, [props.mostrar_busqueda])
   const tipoColorDict = {
     "normal": "rgb(168, 167, 122)",
     "fire": "rgb(238, 129, 48)",
@@ -54,23 +65,50 @@ function Home(props) {
         <b>Home</b>
       </div>
       <div className="llista">
-      {pokemon?.map((poke) => {
-          return (
-            <div className = "pokemon" onClick={() => {Navigate("/pokemon/" + poke.id)}}>
-              <img className='imatge' style={{borderColor: tipoColorDict[poke?.types[0].type.name]}} src={props.shiny ? poke?.sprites?.front_shiny : poke?.sprites?.front_default}></img>
-              <div className='text'>
-                <div className='text_esq'>
-                  <p className='id'>Nº {poke?.id}</p>
-                  <p className='nom'>{poke?.name}</p>
+        {cargant ? <div style={{color:'black'}}> Cargando... </div> :
+        pokemon?.map((poke) => {
+          if (buscar.length>0){
+            if (poke?.name.startsWith(buscar.toLocaleLowerCase(),0)){
+              return (
+                <div className = "pokemon" onClick={() => {Navigate("/pokemon/" + poke.id)}}>
+                  <img className='imatge' style={{borderColor: tipoColorDict[poke?.types[0].type.name]}} src={props.shiny ? poke?.sprites?.front_shiny : poke?.sprites?.front_default}></img>
+                  <div className='text'>
+                    <div className='text_esq'>
+                      <p className='id'>Nº {poke?.id}</p>
+                      <p className='nom'>{poke?.name}</p>
+                    </div>
+                    <div className="text_dret">
+                      <p className='tipus' style={{backgroundColor: tipoColorDict[poke?.types[0].type.name]}}>{poke?.types[0].type.name}</p>
+                      <p className='tipus' style={{backgroundColor: tipoColorDict[poke?.types[1]?.type?.name]}}>{poke?.types[1]?.type?.name}</p>
+                    </div>
+                  </div>
                 </div>
-                <div className="text_dret">
-                  <p className='tipus' style={{backgroundColor: tipoColorDict[poke?.types[0].type.name]}}>{poke?.types[0].type.name}</p>
-                  <p className='tipus' style={{backgroundColor: tipoColorDict[poke?.types[1]?.type?.name]}}>{poke?.types[1]?.type?.name}</p>
+              )
+            }
+            else return <></>
+              
+            }
+            else{
+              return (
+                <div className = "pokemon" onClick={() => {Navigate("/pokemon/" + poke.id)}}>
+                  <img className='imatge' style={{borderColor: tipoColorDict[poke?.types[0].type.name]}} src={props.shiny ? poke?.sprites?.front_shiny : poke?.sprites?.front_default}></img>
+                  <div className='text'>
+                    <div className='text_esq'>
+                      <p className='id'>Nº {poke?.id}</p>
+                      <p className='nom'>{poke?.name}</p>
+                    </div>
+                    <div className="text_dret">
+                      <p className='tipus' style={{backgroundColor: tipoColorDict[poke?.types[0].type.name]}}>{poke?.types[0].type.name}</p>
+                      <p className='tipus' style={{backgroundColor: tipoColorDict[poke?.types[1]?.type?.name]}}>{poke?.types[1]?.type?.name}</p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          )
-        })}
+              )
+            }
+          }
+        )
+      }
+      
       </div>
     </div>
   );

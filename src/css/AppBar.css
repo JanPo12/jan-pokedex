@@ -75,4 +75,16 @@
 }
 .boto_anterior_gen:active {
     transform: translateY(4px);
-} 
+}
+
+.buscar{
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background-color: rgb(0, 242, 255);
+  position: absolute;
+  justify-content: center;
+  top: -40px;
+  height: 41px;
+  z-index: 3;
+}

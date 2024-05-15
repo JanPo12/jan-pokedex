@@ -20,7 +20,7 @@ p {
 .pokemon{
     background-color: rgb(218, 218, 218);
     width: 75%;
-    height: 550px;
+    height: auto;
     justify-content: center;
     margin-top: 3px;
     margin-bottom: 3px;

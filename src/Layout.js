@@ -8,7 +8,7 @@ const Layout = (props) => {
     return (
         <div>
             <Outlet />
-            <Menu shiny={props.shiny} setShiny={props.setShiny}/>
+            <Menu shiny={props.shiny} setShiny={props.setShiny} mostrar_busqueda={props.mostrar_busqueda} setMostrar_busqueda={props.setMostrar_busqueda} />
         </div>
     );
 };
